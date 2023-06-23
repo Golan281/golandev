@@ -6,12 +6,12 @@ on:
             - "main"
 jobs:
     deploy:
-        name: Build & Deploy Client
         runs-on: ubuntu-latest
+        name: Build & Deploy Client
         defaults:
-            run:
-                shell: bash
-                working-directory: client
+          run:
+            shell: bash
+            working-directory: client
         strategy:
             matrix:
                 node-version: [18.x]
