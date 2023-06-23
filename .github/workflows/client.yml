@@ -1,4 +1,4 @@
-name: Deploy Client
+name: Build & Deploy Client
 
 on:
     push:
@@ -7,14 +7,6 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        name: Build & Deploy Client
-        defaults:
-          run:
-            shell: bash
-            working-directory: client
-        strategy:
-            matrix:
-                node-version: [18.x]
         steps:
             - name: git checkout
             - uses: actions/checkout@v3
