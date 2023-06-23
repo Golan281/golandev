@@ -1,4 +1,5 @@
 name: Build & Deploy Client
+uses: actions/setup-node@v3 
 
 on:
     push:
