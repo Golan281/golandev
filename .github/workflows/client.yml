@@ -24,13 +24,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
-            - name: npm i && npm run build && 
-              run: npm i && npx sequelize-cli db:migrate --env dev-test
-              env:
-                LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
-                LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
-                LOCAL_DB_NAME: ${{ secrets.LOCAL_DB_NAME }}
-                LOCAL_DB_PORT: ${{ secrets.LOCAL_DB_PORT }}
-                LOCAL_DB_HOST: ${{ secrets.LOCAL_DB_HOST }}
-                LOCAL_DB_DIALECT: ${{ secrets.LOCAL_DB_DIALECT }}
+            - name: npm i && npm run build && deploy
+              run: npm i && npm run build
+              
            
