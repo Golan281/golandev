@@ -3,16 +3,17 @@ name: Deploy Client
 on:
     push:
         branches:
+            - "main"
             - "develop"
             - "feature/*"
 jobs:
     deploy:
-        name: Test Deploy
-        runs-on: kubernetes
+        name: Deploy Client
+        runs-on: ubuntu-latest
         defaults:
             run:
                 shell: bash
-                working-directory: server
+                working-directory: client
         strategy:
             matrix:
                 node-version: [18.x]
@@ -23,9 +24,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
-            # - name: external ip address
-            #   run: curl ifconfig.me 
-            - name: npm i && DB Migration
+            - name: npm i && npm run build && 
               run: npm i && npx sequelize-cli db:migrate --env dev-test
               env:
                 LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
