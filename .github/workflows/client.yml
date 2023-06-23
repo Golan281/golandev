@@ -1,0 +1,37 @@
+name: Deploy Client
+
+on:
+    push:
+        branches:
+            - "develop"
+            - "feature/*"
+jobs:
+    deploy:
+        name: Test Deploy
+        runs-on: kubernetes
+        defaults:
+            run:
+                shell: bash
+                working-directory: server
+        strategy:
+            matrix:
+                node-version: [18.x]
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+            # - name: external ip address
+            #   run: curl ifconfig.me 
+            - name: npm i && DB Migration
+              run: npm i && npx sequelize-cli db:migrate --env dev-test
+              env:
+                LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
+                LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+                LOCAL_DB_NAME: ${{ secrets.LOCAL_DB_NAME }}
+                LOCAL_DB_PORT: ${{ secrets.LOCAL_DB_PORT }}
+                LOCAL_DB_HOST: ${{ secrets.LOCAL_DB_HOST }}
+                LOCAL_DB_DIALECT: ${{ secrets.LOCAL_DB_DIALECT }}
+           
